@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download Browser Extension</title>
+  <meta name="description" content="Download the extension for Chrome, Firefox, Brave, Vivaldi, Edge, and Opera." />
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: rgba(255, 255, 255, 0.07);
+      --panel-border: rgba(255, 255, 255, 0.12);
+      --text: #e5eefc;
+      --muted: #a7b4cc;
+      --accent: #6ea8ff;
+      --accent-2: #8b5cf6;
+      --button: #ffffff;
+      --button-text: #0b1220;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(110, 168, 255, 0.2), transparent 30%),
+        radial-gradient(circle at top right, rgba(139, 92, 246, 0.18), transparent 28%),
+        linear-gradient(180deg, #09101d 0%, #0b1220 100%);
+      color: var(--text);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 48px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      align-items: center;
+      padding: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.04));
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .brand img {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.08);
+      padding: 10px;
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .lead {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 60ch;
+    }
+
+    .hero-card {
+      padding: 22px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .hero-card h2 {
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+    }
+
+    .hero-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .section {
+      margin-top: 24px;
+      padding: 24px;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--panel-border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: 1.35rem;
+    }
+
+    .section-header p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 60ch;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 20px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(110,168,255,0.28), rgba(139,92,246,0.24));
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 1.2rem;
+      flex: 0 0 auto;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 0.98rem;
+    }
+
+    .actions {
+      display: grid;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-weight: 700;
+      transition: transform 0.15s ease, opacity 0.15s ease, background 0.15s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+
+    .btn.primary {
+      background: var(--button);
+      color: var(--button-text);
+    }
+
+    .btn.secondary {
+      background: transparent;
+      color: var(--text);
+      border-color: rgba(255,255,255,0.16);
+    }
+
+    .docs {
+      display: grid;
+      gap: 12px;
+    }
+
+    .docs a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text);
+    }
+
+    .docs a span {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .footer {
+      margin-top: 20px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      .hero, .grid { grid-template-columns: 1fr; }
+      .section-header { align-items: start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <div>
+        <div class="brand">
+          <img src="icons/icon-main.svg" alt="Extension icon" />
+          <div>
+            <div style="color: var(--muted); font-size: 0.92rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;">Browser Extension</div>
+            <div style="font-size: 1.05rem; color: var(--text); font-weight: 700;">Download & installation page</div>
+          </div>
+        </div>
+        <h1>Install the extension in your browser.</h1>
+        <p class="lead">Choose your browser below to download the extension package and open the local-install guide. This page is ready to publish as a simple static site.</p>
+      </div>
+      <aside class="hero-card">
+        <h2>Before you install</h2>
+        <p>Make sure you have the extension files ready, then follow the browser-specific guide for loading the extension locally.</p>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>Downloads</h2>
+          <p>Pick the package that matches your browser.</p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <div class="card-top">
+            <div class="badge">🦊</div>
+            <div>
+              <h3>Firefox</h3>
+              <p>Firefox users</p>
+            </div>
+          </div>
+          <p>Download the signed Firefox build and install it directly in Firefox.</p>
+          <div class="actions">
+            <a class="btn primary" href="https://drive.google.com/file/d/1QK9-g5CLQA0PIufYJ8dYL0u77ep__tTh/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Download Firefox .xpi</a>
+            <a class="btn secondary" href="#local-install">Installation guide</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <div class="badge">🌐</div>
+            <div>
+              <h3>Chrome / Brave / Vivaldi / Edge</h3>
+              <p>Chromium browsers</p>
+            </div>
+          </div>
+          <p>Use the Chromium package for Chrome-based browsers.</p>
+          <div class="actions">
+            <a class="btn primary" href="https://drive.google.com/file/d/15eR6pBZE8XJ_z-B5_m1QdY6Xk6VhmAwh/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Download Chromium Build</a>
+            <a class="btn secondary" href="#local-install">Installation guide</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <div class="badge">🌀</div>
+            <div>
+              <h3>Opera</h3>
+              <p>Opera users</p>
+            </div>
+          </div>
+          <p>Download the Opera package and load it locally in the browser.</p>
+          <div class="actions">
+            <a class="btn primary" href="https://drive.google.com/file/d/1JI3QdRLs1dtl-4bW6XFIpsJ0HhL78KBa/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Download Opera Build</a>
+            <a class="btn secondary" href="#local-install">Installation guide</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="local-install">
+      <div class="section-header">
+        <div>
+          <h2>How to install the extension locally</h2>
+          <p>Follow the steps for your browser.</p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <div class="card-top">
+            <div class="badge">🦊</div>
+            <div>
+              <h3>Firefox</h3>
+              <p>Signed XPI install</p>
+            </div>
+          </div>
+          <p>
+            1. Download the signed <strong>.xpi</strong> file.<br>
+            2. Open Firefox and drag the <strong>.xpi</strong> file into the browser window.<br>
+            3. Click <strong>Add</strong> when Firefox asks for confirmation.<br>
+            4. The extension will be installed automatically.
+          </p>
+          <div class="actions">
+            <a class="btn secondary" href="https://support.mozilla.org/en-US/kb/find-and-install-add-ons-add-features-to-firefox" target="_blank" rel="noopener noreferrer">Official Firefox Docs</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <div class="badge">🌐</div>
+            <div>
+              <h3>Chrome / Brave / Edge / Vivaldi</h3>
+              <p>Developer mode install</p>
+            </div>
+          </div>
+          <p>
+            1. Download and extract the extension files.<br>
+            2. Open <strong>chrome://extensions</strong>.<br>
+            3. Enable <strong>Developer mode</strong> in the top-right corner.<br>
+            4. Click <strong>Load unpacked</strong>.<br>
+            5. Select the extracted extension folder.
+          </p>
+          <div class="actions">
+            <a class="btn secondary" href="https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked" target="_blank" rel="noopener noreferrer">Official Chromium Docs</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <div class="badge">🌀</div>
+            <div>
+              <h3>Opera</h3>
+              <p>Opera extension install</p>
+            </div>
+          </div>
+          <p>
+            1. Download and extract the extension files.<br>
+            2. Open <strong>opera://extensions</strong>.<br>
+            3. Enable <strong>Developer Mode</strong>.<br>
+            4. Click <strong>Load unpacked</strong>.<br>
+            5. Select the extracted extension folder.
+          </p>
+          <div class="actions">
+            <a class="btn secondary" href="https://help.opera.com/en/extensions/install-chrome-extensions/" target="_blank" rel="noopener noreferrer">Opera Extension Docs</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
